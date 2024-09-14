@@ -4,13 +4,15 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/lhw0828/go-gin-example/pkg/setting"
 	"log"
+
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
 var db *gorm.DB
 
 type Model struct {
 	ID         uint `json:"id" gorm:"primary_key"`
-	CreateOn   int  `json:"create_on"`
+	CreatedOn  int  `json:"created_on"`
 	ModifiedOn int  `json:"modified_on"`
 }
 
@@ -44,8 +46,13 @@ func init() {
 	}
 	db.SingularTable(true)
 	db.LogMode(true)
-	db.DB().SetMaxIdleConns(10)
-	db.DB().SetMaxOpenConns(100)
+	if db != nil {
+		db.DB().SetMaxIdleConns(10)
+		db.DB().SetMaxOpenConns(100)
+	} else {
+		log.Fatal("Failed to initialize database connection")
+	}
+
 }
 
 func CloseDB() {
