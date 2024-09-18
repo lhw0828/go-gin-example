@@ -70,7 +70,7 @@ func GetArticles(c *gin.Context) {
 		data["total"] = models.GetArticleTotal(maps)
 	} else {
 		for _, err := range valid.Errors {
-			logging.Info("err.key: %s, err.message: %s", err.Key, err.Message)
+			logging.Info("err.key: " + err.Key + ", err.message: " + err.Message)
 		}
 	}
 	c.JSON(http.StatusOK, gin.H{
@@ -216,7 +216,7 @@ func DeleteArticle(c *gin.Context) {
 		}
 	} else {
 		for _, err := range valid.Errors {
-			logging.Info("err.key: %s, err.message: %s", err.Key, err.Message)
+			logging.Info("err.key: " + err.Key + ", err.message: " + err.Message)
 		}
 	}
 	c.JSON(http.StatusOK, gin.H{
