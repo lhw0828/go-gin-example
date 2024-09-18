@@ -44,12 +44,12 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
-replace (
-	github.com/lhw0828/go-gin-example/conf => ../go-gin-example/pkg/conf
-	github.com/lhw0828/go-gin-example/middleware => ../go-gin-example/middleware
-	github.com/lhw0828/go-gin-example/models => ../go-gin-example/models
-	github.com/lhw0828/go-gin-example/pkg/e => ../go-gin-example/pkg/e
-	github.com/lhw0828/go-gin-example/pkg/setting => ../go-gin-example/pkg/setting
-	github.com/lhw0828/go-gin-example/pkg/util => ../go-gin-example/pkg/util
-	github.com/lhw0828/go-gin-example/routers => ../go-gin-example/routers
-)
+//replace (
+//	github.com/lhw0828/go-gin-example/conf => ../go-gin-example/pkg/conf
+//	github.com/lhw0828/go-gin-example/middleware => ../go-gin-example/middleware
+//	github.com/lhw0828/go-gin-example/models => ../go-gin-example/models
+//	github.com/lhw0828/go-gin-example/pkg/e => ../go-gin-example/pkg/e
+//	github.com/lhw0828/go-gin-example/pkg/setting => ../go-gin-example/pkg/setting
+//	github.com/lhw0828/go-gin-example/pkg/util => ../go-gin-example/pkg/util
+//	github.com/lhw0828/go-gin-example/routers => ../go-gin-example/routers
+//)

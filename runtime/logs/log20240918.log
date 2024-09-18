@@ -1,0 +1,2 @@
+[INFO][article.go:73]2024/09/18 15:54:43 err.key: %s, err.message: %s state 状态只允许0或1
+[INFO][article.go:73]2024/09/18 15:54:43 err.key: %s, err.message: %s tag_id 标签ID必须大于0

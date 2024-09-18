@@ -5,8 +5,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/lhw0828/go-gin-example/models"
 	"github.com/lhw0828/go-gin-example/pkg/e"
+	"github.com/lhw0828/go-gin-example/pkg/logging"
 	"github.com/lhw0828/go-gin-example/pkg/util"
-	"log"
 )
 
 type auth struct {
@@ -40,7 +40,7 @@ func GetAuth(c *gin.Context) {
 		}
 	} else {
 		for _, err := range valid.Errors {
-			log.Println(err.Key, err.Message)
+			logging.Info(err.Key, err.Message)
 		}
 	}
 
