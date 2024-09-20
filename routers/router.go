@@ -2,10 +2,13 @@ package routers
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/lhw0828/go-gin-example/docs"
 	"github.com/lhw0828/go-gin-example/middleware/jwt"
-	setting "github.com/lhw0828/go-gin-example/pkg/setting"
+	"github.com/lhw0828/go-gin-example/pkg/setting"
 	"github.com/lhw0828/go-gin-example/routers/api"
 	"github.com/lhw0828/go-gin-example/routers/api/v1"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func InitRouter() *gin.Engine {
@@ -16,8 +19,7 @@ func InitRouter() *gin.Engine {
 
 	gin.SetMode(setting.RunMode)
 
-	r.GET("/auth", api.GetAuth)
-
+	docs.SwaggerInfo.BasePath = "/api/v1"
 	apiV1 := r.Group("/api/v1")
 	apiV1.Use(jwt.JWT())
 	{
@@ -34,6 +36,9 @@ func InitRouter() *gin.Engine {
 		apiV1.PUT("/articles/:id", v1.EditArticle)
 		apiV1.DELETE("/articles/:id", v1.DeleteArticle)
 	}
+
+	r.GET("/auth", api.GetAuth)
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	return r
 

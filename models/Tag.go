@@ -1,10 +1,5 @@
 package models
 
-import (
-	"github.com/jinzhu/gorm"
-	"time"
-)
-
 type Tag struct {
 	Model
 
@@ -12,25 +7,7 @@ type Tag struct {
 	CreatedBy  string `json:"created_by"`
 	ModifiedBy string `json:"modified_by"`
 	State      int    `json:"state"`
-}
-
-func (tag *Tag) BeforeCreate(scope *gorm.Scope) error {
-	err := scope.SetColumn("CreatedOn", time.Now().Unix())
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (tag *Tag) BeforeUpdate(scope *gorm.Scope) error {
-	err := scope.SetColumn("ModifiedOn", time.Now().Unix())
-	if err != nil {
-		return err
-	}
-
-	return nil
-
+	DeletedOn  int    `json:"deleted_on"`
 }
 
 func GetTags(pageNum int, pageSize int, maps interface{}) (tags []Tag) {
@@ -93,6 +70,13 @@ func DeleteTag(id int) bool {
 
 func EditTag(id int, data interface{}) bool {
 	db.Model(&Tag{}).Where("id =?", id).Updates(data)
+
+	return true
+}
+
+// CleanAllTag 清除所有
+func CleanAllTag() bool {
+	db.Unscoped().Where("deleted_on != ?", 0).Delete(&Tag{})
 
 	return true
 }
