@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/lhw0828/go-gin-example/models"
 	"github.com/lhw0828/go-gin-example/pkg/logging"
 	"github.com/lhw0828/go-gin-example/pkg/setting"
 	"github.com/lhw0828/go-gin-example/routers"
@@ -13,13 +14,18 @@ import (
 )
 
 func main() {
+
+	setting.Setup()
+	models.Setup()
+	logging.Setup()
+
 	router := routers.InitRouter()
 
 	s := &http.Server{
-		Addr:           fmt.Sprintf(":%d", setting.HttpPort),
+		Addr:           fmt.Sprintf(":%d", setting.ServerSetting.HttpPort),
 		Handler:        router,
-		ReadTimeout:    setting.ReadTimeout,
-		WriteTimeout:   setting.WriteTimeout,
+		ReadTimeout:    setting.ServerSetting.ReadTimeout,
+		WriteTimeout:   setting.ServerSetting.WriteTimeout,
 		MaxHeaderBytes: 1 << 20,
 	}
 
@@ -42,24 +48,4 @@ func main() {
 
 	logging.Info("Server exiting")
 
-	//err := s.ListenAndServe()
-	//if err != nil {
-	//	log.Println(err)
-	//	return
-	//}
-
-	//endless.DefaultReadTimeOut = setting.ReadTimeout
-	//endless.DefaultWriteTimeOut = setting.WriteTimeout
-	//endless.DefaultMaxHeaderBytes = 1 << 20
-	//endPoint := fmt.Sprintf(":%d", setting.HttpPort)
-	//
-	//server := endless.NewServer(endPoint, routers.InitRouter())
-	//server.BeforeBegin = func(add string) {
-	//	log.Printf("Actual pid is %d", syscall.Getpid())
-	//}
-	//
-	//err := server.ListenAndServe()
-	//if err != nil {
-	//	log.Printf("Server err: %v", err)
-	//}
 }

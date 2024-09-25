@@ -17,9 +17,14 @@ func InitRouter() *gin.Engine {
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
 
-	gin.SetMode(setting.RunMode)
+	gin.SetMode(setting.ServerSetting.RunMode)
 
 	docs.SwaggerInfo.BasePath = "/api/v1"
+
+	r.GET("/auth", api.GetAuth)
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	r.POST("/upload_image", api.UploadImage)
+
 	apiV1 := r.Group("/api/v1")
 	apiV1.Use(jwt.JWT())
 	{
@@ -36,9 +41,6 @@ func InitRouter() *gin.Engine {
 		apiV1.PUT("/articles/:id", v1.EditArticle)
 		apiV1.DELETE("/articles/:id", v1.DeleteArticle)
 	}
-
-	r.GET("/auth", api.GetAuth)
-	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	return r
 
