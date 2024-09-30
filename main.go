@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/lhw0828/go-gin-example/models"
+	"github.com/lhw0828/go-gin-example/pkg/gredis"
 	"github.com/lhw0828/go-gin-example/pkg/logging"
 	"github.com/lhw0828/go-gin-example/pkg/setting"
 	"github.com/lhw0828/go-gin-example/routers"
@@ -18,6 +19,10 @@ func main() {
 	setting.Setup()
 	models.Setup()
 	logging.Setup()
+	err := gredis.SetUp()
+	if err != nil {
+		return
+	}
 
 	router := routers.InitRouter()
 

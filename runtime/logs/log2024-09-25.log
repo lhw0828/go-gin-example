@@ -1,0 +1,4 @@
+[INFO][main.go:41]2024/09/25 09:11:04 Shutdown Server...
+[FATAL][main.go:34]2024/09/25 09:11:04 Listen: %s
+ http: Server closed
+[INFO][main.go:49]2024/09/25 09:11:04 Server exiting

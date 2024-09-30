@@ -5,10 +5,12 @@ import (
 	"github.com/lhw0828/go-gin-example/docs"
 	"github.com/lhw0828/go-gin-example/middleware/jwt"
 	"github.com/lhw0828/go-gin-example/pkg/setting"
+	"github.com/lhw0828/go-gin-example/pkg/upload"
 	"github.com/lhw0828/go-gin-example/routers/api"
 	"github.com/lhw0828/go-gin-example/routers/api/v1"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
+	"net/http"
 )
 
 func InitRouter() *gin.Engine {
@@ -21,9 +23,10 @@ func InitRouter() *gin.Engine {
 
 	docs.SwaggerInfo.BasePath = "/api/v1"
 
+	r.StaticFS("/upload/images", http.Dir(upload.GetImageFullPath()))
 	r.GET("/auth", api.GetAuth)
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-	r.POST("/upload_image", api.UploadImage)
+	r.POST("/uploadImage", api.UploadImage)
 
 	apiV1 := r.Group("/api/v1")
 	apiV1.Use(jwt.JWT())
