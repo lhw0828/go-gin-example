@@ -1,6 +1,7 @@
 package gredis
 
 import (
+	"encoding/json"
 	"github.com/gomodule/redigo/redis"
 	"github.com/lhw0828/go-gin-example/pkg/setting"
 	"time"
@@ -48,8 +49,13 @@ func Set(key string, data interface{}, time int) error {
 		}
 	}(conn)
 
+	value, err := json.Marshal(data)
+	if err != nil {
+		return err
+	}
+
 	// 2. 写入redis
-	_, err := conn.Do("SET", key, data)
+	_, err = conn.Do("SET", key, value)
 	if err != nil {
 		return err
 	}
